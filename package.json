@@ -1,0 +1,8 @@
+{
+  "name": "grpc-wallet",
+  "description": "A simple gRPC wallet service.",
+  "main": "dist/index.js",
+  "repository": "git@github.com:pchchv/grpc-wallet.git",
+  "author": "Evgenii Pochechuev <ipchchv@gmail.com>",
+  "packageManager": "yarn@4.4.1"
+}
