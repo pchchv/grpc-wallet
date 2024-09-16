@@ -6,6 +6,16 @@
   "author": "Evgenii Pochechuev <ipchchv@gmail.com>",
   "packageManager": "yarn@4.4.1",
   "license": "Apache-2.0",
+  "scripts": {
+    "distribute": "yarn build-ts && node dist/index.js",
+    "develop": "tsc-watch --skipLibCheck --onSuccess 'node dist/index.js'",
+    "build-ts": "tsc --skipLibCheck",
+    "test": "yarn jest --forceExit --runInBand",
+    "pretty": "prettier --check src",
+    "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src",
+    "proto:build": "cd proto; buf build; cd ..",
+    "codegen:buf": "cd proto; buf generate; cd .."
+  },
   "dependencies": {
     "@bufbuild/protobuf": "^2.0.0",
     "@grpc/grpc-js": "^1.11.2",
