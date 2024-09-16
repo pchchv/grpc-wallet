@@ -23,5 +23,4 @@
         "protos/*"
     ],
     "exclude": ["node_modules/*"]
-
 }

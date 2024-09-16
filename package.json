@@ -27,9 +27,6 @@
   "devDependencies": {
     "@types/pretty": "^2",
     "eslint": "^9.10.0",
-    "eslint-plugin-import": "^2.30.0",
-    "eslint-plugin-jsdoc": "^50.2.3",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript-eslint": "^8.5.0"
