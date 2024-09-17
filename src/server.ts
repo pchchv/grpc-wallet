@@ -1,4 +1,5 @@
 import {
+  WalletService,
   WalletInfoResponse,
   BalanceResponse,
   BalanceRequest,
@@ -7,7 +8,7 @@ import {
   CreateAddressResponse,
   CreateAddressRequest,
 } from "../protos/wallet";
-import { ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js";
+import { Server, ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js";
 
 async function walletInfo(
   call: ServerUnaryCall<string, string>,
@@ -79,3 +80,11 @@ function createAddress(
   createAddressResponse.setAddress(address);
   callback(null, createAddressResponse);
 }
+
+const server = new Server();
+server.addService(WalletService, {
+    createAddress,
+    transaction,
+    balance,
+    walletInfo
+});
