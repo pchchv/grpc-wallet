@@ -4,6 +4,8 @@ import {
   BalanceRequest,
   TransactionResponse,
   TransactionRequest,
+  CreateAddressResponse,
+  CreateAddressRequest,
 } from "../protos/wallet";
 import { ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js";
 
@@ -65,4 +67,15 @@ function transaction(
   const transactionResponse = new TransactionResponse();
   transactionResponse.setTransactionId(transactionId);
   callback(null, transactionResponse);
+}
+
+function createAddress(
+  call: ServerUnaryCall<CreateAddressRequest, CreateAddressResponse>,
+  callback: sendUnaryData<CreateAddressResponse>
+) {
+  // Perform necessary business logic
+  const address = '0x1234567890abcdef';
+  const createAddressResponse = new CreateAddressResponse();
+  createAddressResponse.setAddress(address);
+  callback(null, createAddressResponse);
 }
