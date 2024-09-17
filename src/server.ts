@@ -8,7 +8,12 @@ import {
   CreateAddressResponse,
   CreateAddressRequest,
 } from "../protos/wallet";
-import { Server, ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js";
+import {
+  Server,
+  ServerUnaryCall,
+  sendUnaryData,
+  ServerCredentials,
+} from "@grpc/grpc-js";
 
 async function walletInfo(
   call: ServerUnaryCall<string, string>,
@@ -72,10 +77,10 @@ function transaction(
 
 function createAddress(
   call: ServerUnaryCall<CreateAddressRequest, CreateAddressResponse>,
-  callback: sendUnaryData<CreateAddressResponse>
+  callback: sendUnaryData<CreateAddressResponse>,
 ) {
   // Perform necessary business logic
-  const address = '0x1234567890abcdef';
+  const address = "0x1234567890abcdef";
   const createAddressResponse = new CreateAddressResponse();
   createAddressResponse.setAddress(address);
   callback(null, createAddressResponse);
@@ -83,8 +88,11 @@ function createAddress(
 
 const server = new Server();
 server.addService(WalletService, {
-    createAddress,
-    transaction,
-    balance,
-    walletInfo
+  createAddress,
+  transaction,
+  balance,
+  walletInfo,
+});
+server.bindAsync("localhost:8080", ServerCredentials.createInsecure(), () => {
+  console.log("Server running at http://localhost:8080");
 });
