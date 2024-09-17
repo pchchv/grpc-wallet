@@ -14,6 +14,7 @@ import {
   sendUnaryData,
   ServerCredentials,
 } from "@grpc/grpc-js";
+import { AppDataSource } from "./data-source";
 
 async function walletInfo(
   call: ServerUnaryCall<string, string>,
@@ -21,29 +22,15 @@ async function walletInfo(
 ) {
   const address = call.request;
   try {
-    const result = {
-      total: 100,
-      available: 80,
-    };
-
-    const transactions = [
-      {
-        toAddress: "0x1234567890",
-        points: 10,
-        timestamp: Date.now(),
-        metadata: "",
-      },
-      {
-        toAddress: "0x0987654321",
-        points: 20,
-        timestamp: Date.now(),
-        metadata: "",
-      },
-    ];
-
+    const result = await AppDataSource.query(
+      `SELECT SUM(value) as total, SUM(CASE WHEN to_address = '${address}' THEN value ELSE 0 END) as available FROM transactions WHERE from_address = '${address}'`,
+    );
+    const transactions = await AppDataSource.query(
+      `SELECT to_address, value, timestamp, metadata FROM transactions WHERE from_address = '${address}'`,
+    );
     callback(null, {
-      total: result.total,
-      available: result.available,
+      total: result[0].total,
+      available: result[0].available,
       transactions: transactions,
     });
   } catch (err) {
