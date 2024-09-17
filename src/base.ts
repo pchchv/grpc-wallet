@@ -1,25 +1,26 @@
 import { Entity, PrimaryGeneratedColumn, Column, getManager } from "typeorm";
 import { AppDataSource } from "./data-source";
 
-export @Entity()
+export
+@Entity()
 class Transaction {
   @PrimaryGeneratedColumn()
-    id!: number;
+  id!: number;
 
   @Column()
-    from!: string;
+  from!: string;
 
   @Column()
-    to!: string;
+  to!: string;
 
   @Column()
-    value!: number;
+  value!: number;
 
   @Column("timestamp")
-    timestamp!: Date;
+  timestamp!: Date;
 
   @Column("json")
-    metadata: any;
+  metadata: any;
 }
 
 async function createTransaction(
@@ -35,5 +36,5 @@ async function createTransaction(
   transaction.timestamp = new Date();
   transaction.metadata = metadata;
 
-  await AppDataSource.manager.save(transaction)
+  await AppDataSource.manager.save(transaction);
 }
