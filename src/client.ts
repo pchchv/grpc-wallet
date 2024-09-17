@@ -8,3 +8,13 @@ const client = new WalletClient(
 
 const request = new WalletInfoRequest();
 request.setAddress('0x1234567890abcdef');
+
+client.walletInfo(request, (error, response) => {
+    if (error) {
+        console.error(error);
+    } else {
+        console.log(response.getTotal());
+        console.log(response.getAvailable());
+        console.log(response.getTransactionsList());
+    }
+});
