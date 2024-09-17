@@ -1,5 +1,5 @@
+import { WalletInfoResponse, BalanceResponse, BalanceRequest } from '../protos/wallet';
 import { ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js";
-import { WalletInfoResponse } from '../protos/wallet';
 
 async function walletInfo(call: ServerUnaryCall<string, string>, callback: sendUnaryData<WalletInfoResponse>) {
     const address = call.request;
@@ -32,4 +32,14 @@ async function walletInfo(call: ServerUnaryCall<string, string>, callback: sendU
     } catch (err) {
         callback(null, null);
     }
+}
+
+function balance(call: ServerUnaryCall<BalanceRequest, BalanceResponse>, callback: sendUnaryData<BalanceResponse>) {
+    // Perform necessary business logic
+    const total = 100;
+    const available = 50;
+    const balanceResponse = new BalanceResponse();
+    balanceResponse.setTotal(total);
+    balanceResponse.setAvailable(available);
+    callback(null, balanceResponse);
 }
